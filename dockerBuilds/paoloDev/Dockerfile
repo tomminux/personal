@@ -26,10 +26,6 @@ RUN runuser -l paolo -c 'mkdir .ssh'
 RUN runuser -l paolo -c 'chmod 700 .ssh'
 RUN runuser -l paolo -c 'echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5a5Sdigk4QkPb9DU3viWOUrXQTqc4Ks8ZEy3eMGh6q0JvvOYpW7JVfN4ZMDeU+TlXDj8uqggO2XCd8h3LWaoduTnBdOJeI9qAtjsudWsRPssyskyfDMd6E00JVpPUQmwoLyOqUbqwPp4c860Y06biVCqzq/y0cZ6JVQXPUiuKAbWXSg1kLRO5PeQ7bYu4iSlNRkjPRSzY9UIKjX7kC/xSFqKiSbsYwS7Pszq1ukcnXUNrijbf6qBlVgtCzXIMKZK2DHEfCFfvFxfupI0mWIFtP1I51NIKJEYlY5ToAHiXFSK//RjIhlWKRqAu5ceNgD9dn0j/48saIaxwToA7jky8nVtVoWy6xKroU2GrgyZvNmRgn+24YIROkfiIdbgG8rHqxWx9ccH3e+7/xuPLkbFYxEiTO/T4ZKjHGqt68JAuaV7B7V7ZJpwo+ItdqaekgjIM5lMbjlLzz1a9hwf4c1tPOOlXvCgfL9AlV7wCTXnPSltQiFYtwTHc3DKgEasG0hXgNCQxbIwGuwcEbF6IAJ4wuPU/alYoMMIv+OH2ghwi1nY+bQWCs4v69+PmfhftfS93yv1OJdPvaGc/m4Vgw8a7DpGBK+JmVnZyQN/s/65LCU6DBNCHjP+IcHT8UvdHf4WKK8AOg+Muq/jF8maoXxczrm5GAz7kZ5vp4R0l8HQO2w== arcagni@ITA-ML-00030277" >> .ssh/authorized_keys'
 
-# GIT Client confirguartion for user Paolo
-RUN /bin/bash -c 'git config --global user.name "Paolo Arcagni"'
-RUN /bin/bash -c 'git config --global credential.helper "cache --timeout=86400"'
-
 # Creating environment for dev
 RUN runuser -l paolo -c 'mkdir dev'
 
