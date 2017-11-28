@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: milano-lab-gluster-cluster-ep
+subsets:
+- addresses:
+  - ip: 192.168.166.22
+  ports:
+  - port: 1
+    protocol: TCP
+- addresses:
+  - ip: 192.168.166.21
+  ports:
+  - port: 1
+    protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: milano-lab-gluster-cluster-svc
+spec:
+  ports:
+  - port: 1  
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: milano-lab-gluster-cluster-pv
+spec:
+  storageClassName: milano-lab-glfs1-storage
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteMany
+  glusterfs:
+    endpoints: milano-lab-gluster-cluster-ep
+    path: /gv0
+    readOnly: false
+  persistentVolumeReclaimPolicy: Retain

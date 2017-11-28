@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: acsc-bigip-ctlr
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: k8s-bigip-ctlr
+      labels:
+        app: k8s-bigip-ctlr
+    spec:
+      serviceAccountName: bigip-ctlr-serviceaccount
+      containers:
+        - name: k8s-bigip-ctlr
+          image: "kmaster.local:5000/k8s-bigip-ctlr"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BIGIP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: acsc-bigip-login
+                  key: username
+            - name: BIGIP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: acsc-bigip-login
+                  key: password
+          command: ["/app/bin/k8s-bigip-ctlr"]
+          args: [
+            "--bigip-username=$(BIGIP_USERNAME)",
+            "--bigip-password=$(BIGIP_PASSWORD)",
+            "--bigip-url=10.10.10.83",
+            "--bigip-partition=k8s"
+            #"--namespace=default"
+          ]
+

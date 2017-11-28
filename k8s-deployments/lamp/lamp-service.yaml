@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lamp
+  labels:
+    app: lamp
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: lamp
+  type: LoadBalancer

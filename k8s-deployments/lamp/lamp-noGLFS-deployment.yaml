@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: lamp
+  labels:
+    app: lamp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lamp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lamp
+    spec:
+      containers:
+      - image: kmaster.local:5000/my-lamp
+        name: lamp
+        ports:
+        - containerPort: 80
+          name: lamp

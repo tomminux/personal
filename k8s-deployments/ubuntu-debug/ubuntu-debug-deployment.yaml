@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: ubuntu-debug
+  labels:
+    app: ubuntu-debug
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-debug
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ubuntu-debug
+    spec:
+      containers:
+      - image: kmaster.local:5000/ubuntu-debug
+        name: ubuntu-debug
+        command: ["/usr/local/bin/startContainer.sh"]

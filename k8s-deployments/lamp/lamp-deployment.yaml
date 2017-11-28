@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: lamp
+  labels:
+    app: lamp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lamp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lamp
+    spec:
+      containers:
+      - image: kmaster.local:5000/my-lamp
+        name: lamp
+        ports:
+        - containerPort: 80
+          name: lamp
+        volumeMounts:
+        - name: lamp1-storage
+          mountPath: /var/www/html
+          subPath: lamp1/html
+      volumes:
+      - name: lamp1-storage
+        persistentVolumeClaim:
+          claimName: milano-lab-gluster-cluster-pvc
