@@ -13,8 +13,7 @@ RUN add-apt-repository -y ppa:neovim-ppa/stable
 RUN apt-get update
 
 # Installing Software
-RUN apt-get install -y neovim curl wget iputils-ping inetutils-telnet traceroute net-tools tcpdump vim netcat ssh sudo git 
-RUN apt-get install -y man
+RUN apt-get install -y neovim curl wget iputils-ping inetutils-telnet traceroute net-tools tcpdump vim netcat ssh sudo git build-essential locales man
 
 # User "paolo" initialization
 RUN useradd -c "Paolo Arcagni" -d /home/paolo -m -s /bin/bash paolo
