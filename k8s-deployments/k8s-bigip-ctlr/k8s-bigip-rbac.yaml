@@ -1,3 +1,5 @@
+# for use in k8s clusters using RBAC
+# for Openshift use the openshift specific examples
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -5,38 +7,25 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - "extensions"
   resources:
   - nodes
   - services
   - endpoints
   - namespaces
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - extensions
-  resources:
   - ingresses
+  - secrets
+  - pods
   verbs:
   - get
   - list
   - watch
 - apiGroups:
   - ""
+  - "extensions"
   resources:
   - configmaps
   - events
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - create
-  - patch
-- apiGroups:
-  - "extensions"
-  resources:
   - ingresses/status
   verbs:
   - get
@@ -59,5 +48,5 @@ roleRef:
   name: bigip-ctlr-clusterrole
 subjects:
 - kind: ServiceAccount
-  name: bigip-ctlr-serviceaccount
+  name: bigip-ctlr
   namespace: kube-system
