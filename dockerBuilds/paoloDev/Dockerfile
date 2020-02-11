@@ -28,7 +28,7 @@ RUN runuser -l paolo -c 'echo "YOUR id_rsa.pub CONTENT HERE" >> .ssh/authorized_
 # Creating environment for dev
 RUN runuser -l paolo -c 'mkdir dev'
 
-# Container Startup Stuff
+# Container Startup Stuff
 COPY startContainer.sh /usr/local/bin/.
 RUN chmod 755 /usr/local/bin/startContainer.sh
 
