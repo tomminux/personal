@@ -43,8 +43,7 @@ RUN useradd -c "Paolo Arcagni" -d /home/ubuntu -m -s /bin/bash ubuntu
 RUN usermod -aG sudo ubuntu
 RUN /bin/bash -c 'echo -e "default\ndefault" | passwd ubuntu' 
 RUN runuser -l ubuntu -c 'echo "alias vim=nvim" >> .profile'
-RUN runuser -l ubuntu -c 'echo "PS1=\"[dockerC] --> ${debian_chroot:+($debian_chroot)}\u@terraform
-Dev:\w\$ \"" >> .profile'
+RUN runuser -l ubuntu -c 'echo "PS1=\"[dockerC] --> ${debian_chroot:+($debian_chroot)}\u@terraformDev:\w\$ \"" >> .profile'
 RUN runuser -l ubuntu -c 'mkdir .ssh'
 RUN runuser -l ubuntu -c 'chmod 700 .ssh'
 RUN runuser -l ubuntu -c 'echo "PUT YOUR id_rsa.pub CONTENT HERE" >> .ssh/authorized_keys'
@@ -66,10 +65,8 @@ RUN mv ./terraform /usr/local/bin/.
 ## ..:: Installing Microsoft Azure "az" CLI ::..
 ## ----------------------------------------------------------------------------
 
-RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trus
-ted.gpg.d/microsoft.asc.gpg > /dev/null
-RUN export AZ_REPO=`lsb_release -cs` && echo "deb [arch=amd64] https://packages.microsoft.com/repo
-s/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+RUN export AZ_REPO=`lsb_release -cs` && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
 RUN apt update -y
 RUN apt install azure-cli -y
 
