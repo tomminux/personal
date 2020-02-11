@@ -34,8 +34,7 @@ RUN apt-get update
 ## ..:: Installing Software we need to run terraform ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y neovim curl wget iputils-ping traceroute net-tools vim ssh sudo git build-e
-ssential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg
+RUN apt-get install -y neovim curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
