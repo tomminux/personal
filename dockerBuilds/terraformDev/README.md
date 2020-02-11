@@ -16,7 +16,7 @@ From that directory run the following command:
     
 Once you have the terraform-dev in you images, run it with: 
 
-    docekr run --name terraformDev -f -p 2222:22 -v /<your-dev-dir>:/home/ubuntu/dev terraform-dev:latest
+    docker run --name terraformDev -d -p 2222:22 -v /<your-dev-dir>:/home/ubuntu/dev terraform-dev:latest
     
 You can get to your terraform development docker with
 
