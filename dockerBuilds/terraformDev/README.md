@@ -21,3 +21,7 @@ Once you have the terraform-dev in you images, run it with:
 You can get to your terraform development docker with
 
     ssh -l ubuntu -p 2222 127.0.0.1
+    
+or, if you prefer, you can get to the bash shell directly with the docker exec command:
+
+    docker exec -ti terraformDev /bin/bash
