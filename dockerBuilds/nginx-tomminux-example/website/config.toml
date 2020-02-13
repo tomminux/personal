@@ -1,5 +1,5 @@
 ################################# Default configuration ###################
-baseURL = "https://www.example.com"
+baseURL = "http://www.example.com"
 title = "Meghna"
 theme = "meghna-hugo"
 # post pagination

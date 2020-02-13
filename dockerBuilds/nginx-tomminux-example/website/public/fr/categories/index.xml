@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Meghna</title>
-    <link>https://www.example.com/fr/categories/</link>
+    <link>http://www.example.com/fr/categories/</link>
     <description>Recent content in Categories on Meghna</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr-fr</language>
     
-	<atom:link href="https://www.example.com/fr/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.example.com/fr/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
