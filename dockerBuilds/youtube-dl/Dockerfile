@@ -24,16 +24,13 @@ LABEL maintainer="Paolo Arcagni - paolo.arcagni@gmail.com"
 RUN apt-get update
 RUN apt-get upgrade -y
 
-## ..:: Add "neovim" through ppa ::.
+## ..:: Installing Software we possibly need ::.
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y software-properties-common
 RUN apt-get update
-
-## ..:: Installing Software we need to run terraform ::..
-## ----------------------------------------------------------------------------
-
-RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg
+RUN apt-get install -y software-properties-common 
+RUN apt-get update
+RUN apt-get install -y curl wget vim ssh build-essential unzip ca-certificates apt-transport-https lsb-release sudo python
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
@@ -49,25 +46,17 @@ RUN runuser -l ubuntu -c 'echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCWVsDpYMhY
 
 ## ..:: Creating environment for dev ::..
 ## ----------------------------------------------------------------------------
-## NOTE: we create a ~/dev directory for you to mount the docker host 
+## NOTE: we create a ~/Downloads directory for you to mount the docker host 
 ##       directory for persistence storage 
 
-RUN runuser -l ubuntu -c 'mkdir dev'
+RUN runuser -l ubuntu -c 'mkdir Downloads'
 
-## ..:: Terraform installation ::..
+## ..:: Youtube-DL installation ::..
 ## ----------------------------------------------------------------------------
 
-RUN curl -LO https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_linux_amd64.zip
-RUN unzip terraform_0.13.5_linux_amd64.zip
-RUN mv ./terraform /usr/local/bin/.
-
-## ..:: Installing Microsoft Azure "az" CLI ::..
-## ----------------------------------------------------------------------------
-
-RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
-RUN export AZ_REPO=`lsb_release -cs` && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
-RUN apt update -y
-RUN apt install azure-cli -y
+RUN wget https://yt-dl.org/latest/youtube-dl -O /usr/local/bin/youtube-dl
+RUN chmod a+x /usr/local/bin/youtube-dl
+RUN hash -r
 
 ## ..:: Container Startup Stuff ::..
 ## ----------------------------------------------------------------------------
