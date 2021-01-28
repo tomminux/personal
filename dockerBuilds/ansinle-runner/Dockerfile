@@ -3,6 +3,8 @@
 FROM ubuntu
 LABEL maintainer="Paolo Arcagni - paolo.arcagni@gmail.com" 
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Ubuntu OS update to latest
 RUN apt-get update
 RUN apt-get upgrade -y
