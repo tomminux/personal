@@ -1,7 +1,7 @@
 # Dockerfile to build Paolo's Development Environmnet
 
 FROM ubuntu
-LABEL maintainer="Paolo Arcagni - ansible.arcagni@gmail.com" 
+LABEL maintainer="Paolo Arcagni - paolo.arcagni@gmail.com" 
 
 # Ubuntu OS update to latest
 RUN apt-get update
