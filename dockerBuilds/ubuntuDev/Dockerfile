@@ -36,7 +36,7 @@ RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo 
 RUN useradd -c "Ubuntu Dev User" -d /home/ubuntu -m -s /bin/bash ubuntu
 RUN usermod -aG sudo ubuntu
 RUN /bin/bash -c 'echo -e "default\ndefault" | passwd ubuntu' 
-RUN runuser -l ubuntu -c 'echo "PS1=\"[dockerC] - ${debian_chroot:+($debian_chroot)}\u@terraformDev:\w\$ \"" >> .profile'
+RUN runuser -l ubuntu -c 'echo "PS1=\"[dockerC] - ${debian_chroot:+($debian_chroot)}\u@ubuntuDev:\w\$ \"" >> .profile'
 RUN runuser -l ubuntu -c 'mkdir .ssh'
 RUN runuser -l ubuntu -c 'chmod 700 .ssh'
 #RUN runuser -l ubuntu -c 'echo "PUT YOUR id_rsa.pub CONTENT HERE" >> .ssh/authorized_keys'
