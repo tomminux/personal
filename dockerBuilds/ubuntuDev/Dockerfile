@@ -28,7 +28,7 @@ RUN apt-get update
 ## ..:: Installing Software we need to debug stuff ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg
+RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg nginx
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
