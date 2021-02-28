@@ -23,17 +23,17 @@ LABEL maintainer="Paolo Arcagni - paolo.arcagni@gmail.com"
 
 RUN apt-get update
 RUN apt-get upgrade -y
-
-## ..:: Add "neovim" through ppa ::.
-## ----------------------------------------------------------------------------
-
 RUN apt-get install -y software-properties-common
 RUN apt-get update
 
 ## ..:: Installing Software we need to run terraform ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg
+RUN apt-get install -y \
+  curl wget \
+  iputils-ping traceroute net-tools \
+  vim ssh sudo git build-essential locales man unzip ca-certificates \
+  apt-transport-https lsb-release gnupg gnupg2
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
@@ -57,8 +57,8 @@ RUN runuser -l ubuntu -c 'mkdir dev'
 ## ..:: Terraform installation ::..
 ## ----------------------------------------------------------------------------
 
-RUN curl -LO https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_linux_amd64.zip
-RUN unzip terraform_0.13.5_linux_amd64.zip
+RUN curl -LO https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
+RUN unzip terraform_0.14.7_linux_amd64.zip
 RUN mv ./terraform /usr/local/bin/.
 
 ## ..:: Installing Microsoft Azure "az" CLI ::..
@@ -68,6 +68,13 @@ RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor |
 RUN export AZ_REPO=`lsb_release -cs` && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
 RUN apt update -y
 RUN apt install azure-cli -y
+
+## ..:: Installing Kubernetes kubectl command ::..
+## ----------------------------------------------------------------------------
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
+RUN apt-get update
+RUN apt-get install -y kubectl
 
 ## ..:: Container Startup Stuff ::..
 ## ----------------------------------------------------------------------------
