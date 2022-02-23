@@ -33,7 +33,10 @@ RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo 
 ## ..:: Installing Python3 ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y python3-venv python3-pip
+RUN apt-get install -y python3.8 python3.8-venv python3-pip
+#RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
+RUN rm /usr/bin/python3
+RUN ln -s /usr/bin/python3.8 /usr/bin/python3
 
 ## ..:: Installing Azure AZ command line ::..
 ## ----------------------------------------------------------------------------
