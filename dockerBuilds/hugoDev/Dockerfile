@@ -51,9 +51,11 @@ RUN runuser -l ubuntu -c 'mkdir dev'
 
 RUN curl -OL https://golang.org/dl/go1.20.2.linux-arm64.tar.gz
 RUN curl -OL https://github.com/gohugoio/hugo/releases/download/v0.111.3/hugo_0.111.3_linux-amd64.tar.gz
-RUN tar /usr/local -xvf /hone/ubuntu/go1.20.2.linux-arm64.tar.gz
+RUN tar -C /usr/local -xvf go1.20.2.linux-arm64.tar.gz
+RUN echo "export PATH=$PATH:/usr/local/go/bin" >> /root/.profile
+RUN echo "export PATH=$PATH:/usr/local/go/bin" >> /home/ubuntu/.profile
 RUN mkdir /usr/local/hugo
-RUN tar -C /usr/local/hugo -xvf /hone/ubuntu/hugo_0.111.3_linux-amd64.tar.gz
+RUN tar -C /usr/local/hugo -xvf hugo_0.111.3_linux-amd64.tar.gz
 RUN cp /usr/local/hugo/hugo /usr/local/bin
 
 ## ..:: Installing Microsoft Azure "az" CLI ::..
