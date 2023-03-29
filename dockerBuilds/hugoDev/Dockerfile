@@ -25,7 +25,7 @@ RUN apt-get upgrade -y
 ## ..:: Installing Software we need to run terraform ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg
+RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg rsync
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
