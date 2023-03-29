@@ -25,7 +25,7 @@ RUN apt-get upgrade -y
 ## ..:: Installing Software we need to run terraform ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg rsync
+RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg rsync nginx
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
@@ -73,4 +73,5 @@ COPY startContainer.sh /usr/local/bin/.
 RUN chmod 755 /usr/local/bin/startContainer.sh
 
 EXPOSE 22
+EXPOSE 80
 CMD /usr/local/bin/startContainer.sh
