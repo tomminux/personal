@@ -1,14 +1,11 @@
 ## ----------------------------------------------------------------------------
-##      terraformDev
+##      paoloDev
 ## ----------------------------------------------------------------------------
 ##
-##  Author:         Paolo Arcagni - paolo dot arcagni at gmail dot com
+##  Author:      Paolo Arcagni - paolo dot arcagni at gmail dot com
 ##
-##  Description:    With this dockerfile you can build a docker container with 
-##                  all tools needed to run Terraform sciprts. 
-##
-##                  Azure "az" Command Line Tools was added to work on 
-##                  Microsoft Azure public cloud
+##  Date:        March 2023
+##  Description: A docker container to offer a hugo dev environment   
 ##
 ## ----------------------------------------------------------------------------
 
@@ -22,18 +19,13 @@ LABEL maintainer="Paolo Arcagni - paolo.arcagni@gmail.com"
 ## ----------------------------------------------------------------------------
 
 RUN apt-get update
-RUN apt-get upgrade -y
 RUN apt-get install -y software-properties-common
-RUN apt-get update
+RUN apt-get upgrade -y
 
 ## ..:: Installing Software we need to run terraform ::..
 ## ----------------------------------------------------------------------------
 
-RUN apt-get install -y \
-  curl wget \
-  iputils-ping traceroute net-tools \
-  vim ssh sudo git build-essential locales man unzip ca-certificates \
-  apt-transport-https lsb-release gnupg gnupg2
+RUN apt-get install -y curl wget iputils-ping traceroute net-tools vim ssh sudo git build-essential locales man unzip ca-certificates curl apt-transport-https lsb-release gnupg rsync nginx
 
 ## ..:: User "ubuntu" initialization ::..
 ## ----------------------------------------------------------------------------
@@ -41,10 +33,11 @@ RUN apt-get install -y \
 RUN useradd -c "Ubuntu Dev User" -d /home/ubuntu -m -s /bin/bash ubuntu
 RUN usermod -aG sudo ubuntu
 RUN /bin/bash -c 'echo -e "default\ndefault" | passwd ubuntu' 
-RUN runuser -l ubuntu -c 'echo "PS1=\"[dockerC] - ${debian_chroot:+($debian_chroot)}\u@terraformDev:\w\$ \"" >> .profile'
+RUN runuser -l ubuntu -c 'echo "PS1=\"[dockerC] - ${debian_chroot:+($debian_chroot)}\u@hugoDev:\w\$ \"" >> .profile'
 RUN runuser -l ubuntu -c 'mkdir .ssh'
 RUN runuser -l ubuntu -c 'chmod 700 .ssh'
-RUN runuser -l ubuntu -c 'echo "PUT YOUR id_rsa.pub CONTENT HERE" >> .ssh/authorized_keys'
+#RUN runuser -l ubuntu -c 'echo "PUT YOUR id_rsa.pub CONTENT HERE" >> .ssh/authorized_keys'
+RUN runuser -l ubuntu -c 'echo "" >> .ssh/authorized_keys'
 
 ## ..:: Creating environment for dev ::..
 ## ----------------------------------------------------------------------------
@@ -53,12 +46,17 @@ RUN runuser -l ubuntu -c 'echo "PUT YOUR id_rsa.pub CONTENT HERE" >> .ssh/author
 
 RUN runuser -l ubuntu -c 'mkdir dev'
 
-## ..:: Terraform installation ::..
+## ..:: Installing GO adn Hugo ::..
 ## ----------------------------------------------------------------------------
 
-RUN curl -LO https://releases.hashicorp.com/terraform/1.1.3/terraform_1.1.3_linux_amd64.zip
-RUN unzip terraform_1.1.3_linux_amd64.zip
-RUN mv ./terraform /usr/local/bin/.
+RUN curl -OL https://golang.org/dl/go1.20.2.linux-arm64.tar.gz
+RUN curl -OL https://github.com/gohugoio/hugo/releases/download/v0.111.3/hugo_0.111.3_linux-amd64.tar.gz
+RUN tar -C /usr/local -xvf go1.20.2.linux-arm64.tar.gz
+RUN echo "export PATH=$PATH:/usr/local/go/bin" >> /root/.profile
+RUN echo "export PATH=$PATH:/usr/local/go/bin" >> /home/ubuntu/.profile
+RUN mkdir /usr/local/hugo
+RUN tar -C /usr/local/hugo -xvf hugo_0.111.3_linux-amd64.tar.gz
+RUN cp /usr/local/hugo/hugo /usr/local/bin
 
 ## ..:: Installing Microsoft Azure "az" CLI ::..
 ## ----------------------------------------------------------------------------
@@ -68,13 +66,6 @@ RUN export AZ_REPO=`lsb_release -cs` && echo "deb [arch=amd64] https://packages.
 RUN apt update -y
 RUN apt install azure-cli -y
 
-## ..:: Installing Kubernetes kubectl command ::..
-## ----------------------------------------------------------------------------
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-RUN apt-get update
-RUN apt-get install -y kubectl
-
 ## ..:: Container Startup Stuff ::..
 ## ----------------------------------------------------------------------------
 
@@ -82,4 +73,5 @@ COPY startContainer.sh /usr/local/bin/.
 RUN chmod 755 /usr/local/bin/startContainer.sh
 
 EXPOSE 22
+EXPOSE 80
 CMD /usr/local/bin/startContainer.sh
